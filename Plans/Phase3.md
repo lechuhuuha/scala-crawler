@@ -1,7 +1,7 @@
 Phase 3 — Robots + sitemap discovery/merge (+ .xml.gz)
 Goal: given a domain, discover all sitemaps from robots.txt, merge them, parse sitemapindex/urlset (including .xml.gz).
 Fetch https://{domain}/robots.txt, extract all Sitemap: lines, store in sitemaps
-robots fetch failure → allow all + log/store: robots_cache.rules_blob = "", robots_cache.mode = ALLOW_ALL_FALLBACK, error = <message> 
+robots fetch failure -> allow all + log/store: robots_cache.rules_blob = "", robots_cache.mode = ALLOW_ALL_FALLBACK, error = <message>
 Fallback to https://{domain}/sitemap.xml if none found
 Support:
 sitemapindex.xml recursion with max_sitemap_recursion_depth
@@ -27,5 +27,4 @@ Implement sitemap parsing:
 - support .xml.gz by gzip decoding
 Populate job_urls with normalized URLs and computed path_depth and priority (homepage first then smaller path_depth).
 Implement robots gating using custom UA "MiniSiteAuditBot/0.1" with a Scala robots.txt parser library.
-Mark SKIPPED_ROBOTS when disallowed, else ELIGIBLE.
 Persist everything in Postgres.

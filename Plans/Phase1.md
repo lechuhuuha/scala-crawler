@@ -5,15 +5,14 @@ jobs, job_runs, sitemaps, job_urls, url_runs, robots_cache, plus tasks (for leas
 Encode enums as text values (easier to inspect during demo)
 Add indexes:
 tasks(status, leased_at), job_urls(job_id, status, priority), url_runs(job_url_id, run_index)
-Job config defaulting to max_audit_urls = 10
-Robots fallback mode (so you can explain “allow all on invalid robots” clearly)
-jobs.config_json jsonb (or equivalent)
+Job config defaults in jobs.config_json jsonb (or equivalent)
 must include: { "max_audit_urls": 10, "audit_runs_per_url": 3, ... }
+Robots fallback mode for invalid/unavailable robots
 robots_cache.mode text with values: NORMAL | ALLOW_ALL_FALLBACK
 robots_cache.last_error text (nullable)
 
 DoD:
-migrations apply cleanly, ndexes for leasing/reporting, and you can insert a dummy job
+migrations apply cleanly, indexes for leasing/reporting exist, and you can insert a dummy job
 
 Prompt
 In services/control-plane, implement SQL migrations to create tables:
