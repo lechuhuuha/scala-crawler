@@ -27,4 +27,4 @@ Implement URL admission + task generation:
 - Implement POST /tasks/lease using SELECT FOR UPDATE SKIP LOCKED to lease one task.
 - Implement lease TTL recovery (leased tasks that expired become PENDING again).
 - Implement POST /tasks/{taskId}/complete to store lighthouse_json (jsonb), extracted scores, duration, and mark run/task statuses.
-Only retry network/timeouts: classify errors accordingly.
+Only retry network/timeouts: map these to RETRYABLE_FAILED; other errors map to FAILED.

@@ -5,9 +5,9 @@ When overloaded:
 job status AUDITING -> OVERLOADED
 tighten caps (stepwise)
 new admissions become DEFERRED
-When auditing finishes and deferred exists -> job PAUSED
+When admitted URLs finish and deferred URLs still exist -> job PAUSED
 Manual resume:
-POST /jobs/{id}/resume increments run_no, re-admits DEFERRED URLs using current caps
+POST /jobs/{id}/resume increments run_no, re-admits DEFERRED URLs using current caps, and returns job to AUDITING
 DoD:
 you can force overload (e.g., low timeouts) and observe DEFERRED + PAUSED + resume flow
 

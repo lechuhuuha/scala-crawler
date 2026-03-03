@@ -6,7 +6,7 @@ Encode enums as text values (easier to inspect during demo)
 Add indexes:
 tasks(status, leased_at), job_urls(job_id, status, priority), url_runs(job_url_id, run_index)
 Job config defaults in jobs.config_json jsonb (or equivalent)
-must include: { "max_audit_urls": 10, "audit_runs_per_url": 3, ... }
+must include: { "max_audit_urls": 10, "audit_runs_per_url": 3, "max_sitemap_recursion_depth": 3, ... }
 Robots fallback mode for invalid/unavailable robots
 robots_cache.mode text with values: NORMAL | ALLOW_ALL_FALLBACK
 robots_cache.last_error text (nullable)
@@ -22,7 +22,7 @@ Use the following states exactly:
 - job_urls.status: DISCOVERED, SKIPPED_ROBOTS, ELIGIBLE, ADMITTED, QUEUED, RUNNING, DONE, DEFERRED, FAILED
 - url_runs.status: PENDING, LEASED, SUCCEEDED, RETRYABLE_FAILED, FAILED
 - tasks.status: PENDING, LEASED, DONE
-- jobs.config_json jsonb with defaults: max_audit_urls=10, audit_runs_per_url=3
+- jobs.config_json jsonb with defaults: max_audit_urls=10, audit_runs_per_url=3, max_sitemap_recursion_depth=3
 - robots_cache.mode text enum-like (NORMAL, ALLOW_ALL_FALLBACK)
 - robots_cache.last_error text nullable
 Add sensible indexes for leasing and reporting.

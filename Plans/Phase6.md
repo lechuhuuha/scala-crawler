@@ -11,5 +11,6 @@ Prompt
 Implement aggregation:
 - When all 3 url_runs for a job_url are SUCCEEDED, compute median per score field and mark job_url DONE.
 - Store aggregated median scores in job_urls (json column).
+- If retries are exhausted and a run is FAILED, mark job_url FAILED (do not aggregate partial results).
 Implement GET /jobs/{id}/report to return per-URL medians and a job summary.
 Ensure report queries avoid scanning lighthouse_json blobs.
