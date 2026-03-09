@@ -1,0 +1,52 @@
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: scala-crawler-postgres
+    environment:
+      POSTGRES_DB: scala_crawler
+      POSTGRES_USER: scala_crawler
+      POSTGRES_PASSWORD: scala_crawler
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U scala_crawler -d scala_crawler"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  control-plane:
+    build:
+      context: ./services/control-plane
+      dockerfile: Dockerfile
+    container_name: scala-crawler-control-plane
+    environment:
+      CONTROL_PLANE_DB_URL: jdbc:postgresql://postgres:5432/scala_crawler
+      CONTROL_PLANE_DB_USER: scala_crawler
+      CONTROL_PLANE_DB_PASSWORD: scala_crawler
+      CONTROL_PLANE_HTTP_HOST: 0.0.0.0
+      CONTROL_PLANE_HTTP_PORT: 8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"
+
+  worker:
+    build:
+      context: ./services/worker
+      dockerfile: Dockerfile
+    container_name: scala-crawler-worker
+    environment:
+      WORKER_HTTP_PORT: 3000
+      CONTROL_PLANE_BASE_URL: http://control-plane:8080
+      WORKER_POLL_INTERVAL_MS: 5000
+    depends_on:
+      - control-plane
+    ports:
+      - "3000:3000"
+
+volumes:
+  pgdata:

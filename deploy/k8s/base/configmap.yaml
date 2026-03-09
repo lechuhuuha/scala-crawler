@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: control-plane-config
+  namespace: scala-crawler
+data:
+  CONTROL_PLANE_HTTP_HOST: "0.0.0.0"
+  CONTROL_PLANE_HTTP_PORT: "8080"
+  CONTROL_PLANE_DB_URL: "jdbc:postgresql://postgres:5432/scala_crawler"
+  CONTROL_PLANE_DB_USER: "scala_crawler"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: worker-config
+  namespace: scala-crawler
+data:
+  WORKER_HTTP_PORT: "3000"
+  WORKER_POLL_INTERVAL_MS: "5000"
+  CONTROL_PLANE_BASE_URL: "http://control-plane:8080"

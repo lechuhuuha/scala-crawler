@@ -1,0 +1,17 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: scala-crawler-prod
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/lechuhuuha/scala-crawler.git
+    targetRevision: HEAD
+    path: deploy/prod
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: scala-crawler
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
