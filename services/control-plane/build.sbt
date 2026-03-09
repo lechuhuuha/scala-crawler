@@ -25,6 +25,7 @@ lazy val root = (project in file("."))
       "org.flywaydb" % "flyway-core" % "10.20.1",
       "org.flywaydb" % "flyway-database-postgresql" % "10.20.1",
       "org.postgresql" % "postgresql" % "42.7.4",
+      "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
       "com.typesafe.akka" %% "akka-http-testkit" % akkaHttpVersion % Test,
       "org.scalatest" %% "scalatest" % "3.2.18" % Test
     )

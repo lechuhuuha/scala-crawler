@@ -27,7 +27,8 @@ object ControlPlaneServer {
     val host = config.getString("control-plane.http.host")
     val port = config.getInt("control-plane.http.port")
 
-    val bindingFuture = Http().newServerAt(host, port).bind(ControlPlaneRoutes.routes)
+    val api = JdbcControlPlaneApi.fromConfig(config)
+    val bindingFuture = Http().newServerAt(host, port).bind(ControlPlaneRoutes.routes(api))
 
     bindingFuture.onComplete {
       case Success(binding) =>
